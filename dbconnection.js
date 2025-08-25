@@ -4,7 +4,7 @@ var connection = mysql.createPool({
      host:"DESKTOP-IK6ME8M",
     user: "Bilal",
     password: "root",
-    database: "sunfocuz_db_v1",
+    database: "neo_tronice",
   
     
 });

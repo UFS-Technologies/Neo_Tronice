@@ -145,8 +145,10 @@ router.get("/Search_Enquiry_Source/", function (req, res, next) {
       req.query.Enquiry_Source_Name,
       function (err, rows) {
         if (err) {
+          console.log('<<<<<<<<<<<',err)
           res.json(err);
         } else {
+          console.log(',,,,,,,',rows)
           res.json(rows[0]);
         }
       }
@@ -820,6 +822,27 @@ router.get("/Get_Districts", function (req, res) {
   });
 });
 
+
+router.get("/Get_CustomFields_On_EnquirySource", function (req, res, next) {
+  try {
+    lead.Get_CustomFields_On_EnquirySource(
+      req.query.enquiry_source_id,
+      req.query.lead_id,
+      function (err, rows) {
+        if (err) {
+          res.json(err);
+          console.log('err: ', err);
+        } else {
+          res.json(rows[0]);
+          console.log('rows[0]: ', rows[0]);
+        }
+      }
+    );
+  } catch (e) {
+    console.log('e: ', e);
+    res.status(500).json({ message: "Unhandled error", error: e.toString() });
+  }
+});
 
 
 module.exports = router;

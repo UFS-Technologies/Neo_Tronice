@@ -829,6 +829,19 @@ lead_.CRE_Name,
     const sql = "CALL Get_Districts()";
     db.query(sql, callback);
   },
+
+  Get_CustomFields_On_EnquirySource: function (enquiry_source_id, lead_id_, callback) {
+    console.log('lead_id_: ', lead_id_);
+    console.log('status_id_: ', enquiry_source_id);
+if (!enquiry_source_id) enquiry_source_id = 0;
+  if (lead_id_ === undefined || lead_id_ === "undefined") lead_id_ = 0;
+
+  return db.query(
+    "CALL Get_CustomFields_On_EnquirySource(@_enquiry_source_id := ?, @_lead_id := ?)",
+    [enquiry_source_id, lead_id_],
+    callback
+  );
+},
 };
 
 module.exports = lead;

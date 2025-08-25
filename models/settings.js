@@ -97,24 +97,33 @@ Save_custom_field: function (custom_field_, callback) {
         custom_field_.custom_field_type_id === 3 && Array.isArray(custom_field_.Dropdown_Values)
         ? JSON.stringify(custom_field_.Dropdown_Values)
         : '[]';
-console.log("Calling with params:", [
-  custom_field_.custom_field_id,
-  custom_field_.custom_field_type_id,
-  custom_field_.custom_field_name,
-  dropdownJson
-]);
+
+    const checkboxJson = 
+        custom_field_.custom_field_type_id === 5 && Array.isArray(custom_field_.Checkbox_Values)
+        ? JSON.stringify(custom_field_.Checkbox_Values)
+        : '[]';
+
+    console.log("Calling with params:", [
+      custom_field_.custom_field_id,
+      custom_field_.custom_field_type_id,
+      custom_field_.custom_field_name,
+      dropdownJson,
+      checkboxJson
+    ]);
 
     return db.query(
-        "CALL Save_custom_field(?, ?, ?, ?)",
+        "CALL Save_custom_field(?, ?, ?, ?, ?)",
         [
             custom_field_.custom_field_id,
             custom_field_.custom_field_type_id,
             custom_field_.custom_field_name,
-            dropdownJson
+            dropdownJson,
+            checkboxJson
         ],
         callback
     );
 }
+
 ,
 Delete_custom_field: function (custom_field_Id_, callback) {
     return db.query("CALL Delete_custom_field(@Custom_Field_Id_ := ?)", [custom_field_Id_], callback);
