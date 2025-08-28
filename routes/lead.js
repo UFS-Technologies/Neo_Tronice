@@ -13,7 +13,7 @@ router.post("/Save_lead/", function (req, res, next) {
       req.body.followup,
       req.User_Details_Id,
       req.body.lead.customFields,
-    
+      req.body.lead.enquiryForCustomFields,
       
       function (err, rows) {
         if (err) {
@@ -843,6 +843,28 @@ router.get("/Get_CustomFields_On_EnquirySource", function (req, res, next) {
     res.status(500).json({ message: "Unhandled error", error: e.toString() });
   }
 });
+
+router.get("/Get_CustomFields_On_EnquiryFor", function (req, res, next) {
+  try {
+    lead.Get_CustomFields_On_EnquiryFor(
+      req.query.enquiry_for_id,
+      req.query.lead_id,
+      function (err, rows) {
+        if (err) {
+          res.json(err);
+          console.log("err: ", err);
+        } else {
+          res.json(rows[0]); // return first result set
+          console.log("rows[0]: ", rows[0]);
+        }
+      }
+    );
+  } catch (e) {
+    console.log("e: ", e);
+    res.status(500).json({ message: "Unhandled error", error: e.toString() });
+  }
+});
+
 
 
 module.exports = router;

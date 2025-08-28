@@ -2,7 +2,7 @@ var db = require("../dbconnection");
 var fs = require("fs");
 const uuid = require("uuid");
 var lead = {
-  Save_lead: function (lead_, followup_, User_Details_Id,customFields_, callback) {
+  Save_lead: function (lead_, followup_, User_Details_Id,customFields_, enquiryForCustomFields_, callback) {
     console.log("lead_: ", lead_);
     console.log("followup_: ", followup_);
   console.log("customFields_: ", customFields_);
@@ -23,7 +23,15 @@ var lead = {
           customefieldid: field.custom_field_id,  // Map to expected field name
           datavalue: field.value                   // Map to expected field name
         }));
-        
+
+        let transformedenquiryCustomFields = null;
+      if (enquiryForCustomFields_ && Array.isArray(enquiryForCustomFields_) && enquiryForCustomFields_.length > 0) {
+        transformedenquiryCustomFields = enquiryForCustomFields_.map(field => ({
+          custom_field_id: field.custom_field_id,  // Map to expected field name
+          value: field.value                   // Map to expected field name
+        }));
+
+      }
         console.log("Transformed customFields:", transformedCustomFields);        // Add transformed custom fields to followup data
         followup_.CustomFields = transformedCustomFields;
       }
@@ -125,7 +133,9 @@ var lead = {
         @PE_Name_ :=?,
           @CRE_Id_ :=?,
             @CRE_Name_ :=?,
-      @customFields_ := ? 
+            @Custom_Fields_ :=?,
+      @enquiryForCustomFields_ := ? 
+
        )
     `;
    // Prepare customFields for the stored procedure
@@ -140,6 +150,18 @@ var lead = {
         customFieldsForProcedure = JSON.stringify(transformedFields);
         console.log("customFieldsForProcedure JSON:", customFieldsForProcedure);
     }
+
+    let enquirycustomFieldsForProcedure = null;
+    if (enquiryForCustomFields_ && Array.isArray(enquiryForCustomFields_) && enquiryForCustomFields_.length > 0) {
+        // Transform to match stored procedure expectations
+        const transformedFields = enquiryForCustomFields_.map(field => ({
+           custom_field_id: field.custom_field_id,  // Map to expected field name
+          value: field.value  
+        }));
+        enquirycustomFieldsForProcedure = JSON.stringify(transformedFields);
+        console.log("customFieldsForProcedure JSON:", enquirycustomFieldsForProcedure);
+    }
+
     const parameters = [
       lead_.Customer_Id,
       lead_.Customer_Name,
@@ -216,7 +238,10 @@ var lead = {
 lead_.PE_Name,
 lead_.CRE_Id,
 lead_.CRE_Name,
-       customFieldsForProcedure 
+       customFieldsForProcedure,
+       enquirycustomFieldsForProcedure
+
+
     ];
 
     return db.query(sqlQuery, parameters, callback);
@@ -842,6 +867,20 @@ if (!enquiry_source_id) enquiry_source_id = 0;
     callback
   );
 },
+Get_CustomFields_On_EnquiryFor: function (enquiry_for_id, lead_id_, callback) {
+  console.log("lead_id_: ", lead_id_);
+  console.log("enquiry_for_id_: ", enquiry_for_id);
+
+  if (!enquiry_for_id) enquiry_for_id = 0;
+  if (lead_id_ === undefined || lead_id_ === "undefined") lead_id_ = 0;
+
+  return db.query(
+    "CALL Get_CustomFields_On_EnquiryFor(@_enquiry_for_id := ?, @_lead_id := ?)",
+    [enquiry_for_id, lead_id_],
+    callback
+  );
+},
+
 };
 
 module.exports = lead;
