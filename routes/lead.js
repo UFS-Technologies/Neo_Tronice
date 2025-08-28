@@ -845,6 +845,7 @@ router.get("/Get_CustomFields_On_EnquirySource", function (req, res, next) {
 });
 
 router.get("/Get_CustomFields_On_EnquiryFor", function (req, res, next) {
+  console.log("ggggggggg",req.query)
   try {
     lead.Get_CustomFields_On_EnquiryFor(
       req.query.enquiry_for_id,
