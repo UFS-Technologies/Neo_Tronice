@@ -638,9 +638,9 @@ lead_.CRE_Name,
       "CALL Save_Enquiry_For(" +
         "@Enquiry_For_Id_ :=?," +
         "@Enquiry_For_Name_ :=?" +
-        "@Custom_Fields:=?"+
+       
         ")",
-      [enquiry_for_.Enquiry_For_Id, enquiry_for_.Enquiry_For_Name,JSON.stringify(enquiry_for_.Custom_Fields)],
+      [enquiry_for_.Enquiry_For_Id, enquiry_for_.Enquiry_For_Name],
       callback
     );
   },
