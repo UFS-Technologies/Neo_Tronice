@@ -159,7 +159,7 @@ var lead = {
           value: field.value  
         }));
         enquirycustomFieldsForProcedure = JSON.stringify(transformedFields);
-        console.log("customFieldsForProcedure JSON:", enquirycustomFieldsForProcedure);
+        console.log("enquirycustomFieldsForProcedure JSON:", enquirycustomFieldsForProcedure);
     }
 
     const parameters = [
@@ -635,13 +635,9 @@ lead_.CRE_Name,
   },
   Save_Enquiry_For: function (enquiry_for_, callback) {
     return db.query(
-      "CALL Save_Enquiry_For(" +
-        "@Enquiry_For_Id_ :=?," +
-        "@Enquiry_For_Name_ :=?" +
-      
-        "@Custom_Fields:=?"+
-
-        ")",
+    
+      "CALL Save_Enquiry_For(?, ?, ?)",
+    
       [enquiry_for_.Enquiry_For_Id, enquiry_for_.Enquiry_For_Name,JSON.stringify(enquiry_for_.Custom_Fields)],
       callback
     );

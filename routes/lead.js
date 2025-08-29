@@ -465,12 +465,15 @@ router.get("/Search_Checklist/", function (req, res, next) {
 });
 
 router.post("/Save_Enquiry_For/", function (req, res, next) {
+  console.log("<<<<<<<<<<",req.body)
   try {
     lead.Save_Enquiry_For(req.body, function (err, rows) {
       if (err) {
         res.json(err);
       } else {
+        console.log(rows)
         res.json(rows[0][0]);
+
       }
     });
   } catch (e) {
@@ -856,7 +859,7 @@ router.get("/Get_CustomFields_On_EnquiryFor", function (req, res, next) {
           console.log("err: ", err);
         } else {
           res.json(rows[0]); // return first result set
-          console.log("rows[0]: ", rows[0]);
+          console.log("rows[0]dddd: ", rows[0]);
         }
       }
     );
