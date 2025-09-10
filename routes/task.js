@@ -319,22 +319,7 @@ router.post("/Task_Complete_Button_Click/", function (req, res, next) {
           expiresIn: "24h",
           algorithm: "HS256",
         });
-        // jwt.verify(token, JWT_SECRET, function(err, decoded) {
-        //   if (err) {
-        //     return res.status(401).json({
-        //       success: false,
-        //       message: 'Invalid token',
-        //       error: err.message
-        //     });
-        //   }
-
-        //   // Return the decoded token payload
-        //   return res.json({
-        //     success: true,
-        //     message: 'Token verified successfully',
-        //     data: decoded
-        //   });
-        // });
+        
         const feedbackLink = `${BASE_URL}/feedback?token=${encodeURIComponent(
           token
         )}`;
@@ -705,8 +690,6 @@ router.post("/save_expense_details", function (req, res, next) {
 router.post("/Change_Task_Status", function (req, res, next) {
   try {
     let taskData = req.body;
-    console.log(taskData);
-
     task.Change_Task_Status(taskData, function (err, rows) {
       if (err) {
         console.log("err: ", err);
