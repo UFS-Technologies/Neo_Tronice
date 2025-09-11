@@ -365,7 +365,7 @@ var task = {
     });
   },
   Change_Task_Status: function (taskData, callback) {
-     const Tasks = taskData.Tasks ? JSON.stringify(taskData.Tasks) : "[]";
+    //  const Tasks = taskData.Tasks ? JSON.stringify(taskData.Tasks) : "[]";
     return db.query(
       "CALL Change_Task_Status(?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
@@ -375,7 +375,7 @@ var task = {
         taskData.By_User_Id,
         taskData.Description,
         taskData.Next_FollowUp_Date,
-        Tasks,
+        taskData.Tasks,
         taskData.Is_Active,
         taskData.Location,
       ],
