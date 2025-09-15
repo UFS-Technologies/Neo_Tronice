@@ -157,13 +157,13 @@ router.get('/Get_Attendance_By_DateRange', (req, res) => {
     const   fromDate  = req.query.fromDate;
     const   toDate = req.query.toDate;
 
-    console.log( fromDate,toDate)
-    if (!fromDate || !toDate) {
-        return res.status(400).json({
-            success: false,
-            message: 'Both fromDate and toDate query parameters are required'
-        });
-    }
+    // console.log( fromDate,toDate)
+    // if (!fromDate || !toDate) {
+    //     return res.status(400).json({
+    //         success: false,
+    //         message: 'Both fromDate and toDate query parameters are required'
+    //     });
+    // }
 console.log(req.User_Details_Id)
     attendance.Get_Attendance_By_DateRange(fromDate, toDate,req.User_Details_Id, (err, rows) => {
         

@@ -51,7 +51,7 @@ var task_status = {
         "@Task_Type_Color_ :=?," +
         "@Task_Type_Image_ :=?," +
         "@Department_Ids_ :=?," +
-        "@Branch_Ids_ :=?," +
+        // "@Branch_Ids_ :=?," +
         "@default_status_id_ :=?," +
         "@Duration_ :=?," +
         "@task_type_status_ :=?," +
@@ -64,7 +64,7 @@ var task_status = {
         task_type_.Task_Type_Color,
         task_type_.Task_Type_Image,
         task_type_.Department_Ids,
-        task_type_.Branch_Ids,
+        // task_type_.Branch_Ids,
         task_type_.default_status_id,
         task_type_.Duration,
         JSON.stringify(task_type_.task_type_status),

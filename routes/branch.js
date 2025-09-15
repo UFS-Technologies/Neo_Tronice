@@ -32,10 +32,10 @@ router.get("/Get_All_Branch", async (req, res) => {
   }
 });
 
-router.delete("/Delete_Branch/:id", async (req, res) => {
+router.post("/delete_branch", async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await branchModel.Delete_Branch(id);
+    const { branch_id} = req.body;
+    const result = await branchModel.Delete_Branch(branch_id);
     res.status(200).json({
       success: true,
       message: "Branch deleted successfully",
