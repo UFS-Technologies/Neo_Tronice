@@ -133,6 +133,7 @@ var lead = {
         @PE_Name_ :=?,
           @CRE_Id_ :=?,
             @CRE_Name_ :=?,
+             @Vertical_Id_ := ?, @Vertical_Name_ := ?, @Designation_Id_ := ?, @Designation_Name_ := ?,
             @Custom_Fields_ :=?,
       @enquiryForCustomFields_ := ? 
 
@@ -238,6 +239,10 @@ var lead = {
 lead_.PE_Name,
 lead_.CRE_Id,
 lead_.CRE_Name,
+  lead_.Vertical_Id,      // ✅ Add Vertical Id
+    lead_.Vertical_Name,    // ✅ Add Vertical Name
+    lead_.Designation_Id,   // ✅ Add Designation Id
+    lead_.Designation_Name,
        customFieldsForProcedure,
        enquirycustomFieldsForProcedure
 
@@ -246,6 +251,9 @@ lead_.CRE_Name,
 
     return db.query(sqlQuery, parameters, callback);
   },
+ 
+
+
 
   Delete_lead: function (lead_Id_, callback) {
     return db.query("CALL Delete_lead(@lead_Id_ := ?)", [lead_Id_], callback);
@@ -318,6 +326,7 @@ lead_.CRE_Name,
         Page_Index2_,
         Enquiry_For_Id_,
         User_Details_Id_,
+        
       ],
       callback
     );
@@ -623,6 +632,21 @@ lead_.CRE_Name,
       callback
     );
   },
+  // Vertical Search
+Search_Vertical: function (Vertical_Name_, callback) {
+    if (Vertical_Name_ === undefined || Vertical_Name_ === "undefined")
+        Vertical_Name_ = "";
+    return db.query("CALL Search_Vertical(@Vertical_Name_ := ?)", [Vertical_Name_], callback);
+},
+
+// Designation Search
+Search_Designation: function (Designation_Name_, callback) {
+    if (Designation_Name_ === undefined || Designation_Name_ === "undefined")
+        Designation_Name_ = "";
+    return db.query("CALL Search_Designation(@Designation_Name_ := ?)", [Designation_Name_], callback);
+},
+
+  
 
   Search_Checklist: function (Checklist_Name_, callback) {
     if (Checklist_Name_ === undefined || Checklist_Name_ === "undefined")

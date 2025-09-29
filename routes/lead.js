@@ -30,6 +30,8 @@ router.post("/Save_lead/", function (req, res, next) {
   }
 });
 
+
+
 // Get_Lead_Report_By_Enquiry_Source
 router.get("/Get_Lead_Report_By_Enquiry_Source/", function (req, res, next) {
   try {
@@ -112,12 +114,14 @@ router.get("/Search_Customer/", function (req, res, next) {
 });
 
 router.get("/Get_lead/:Customer_Id?", function (req, res, next) {
+
   try {
     lead.Get_lead(req.query.Customer_Id, function (err, rows) {
       if (err) {
         console.log("err: ", err);
         res.json(err);
       } else {
+        console.log(req.query.Customer_Id)
         res.json(rows[0]);
       }
     });
@@ -450,6 +454,32 @@ router.get("/Search_Enquiry_For/", function (req, res, next) {
   } finally {
   }
 });
+// Vertical Search
+router.get("/Search_Vertical/", function (req, res, next) {
+    try {
+        lead.Search_Vertical(req.query.Vertical_Name, function (err, rows) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(rows[0]);
+            }
+        });
+    } catch (e) { } finally { }
+});
+
+// Designation Search
+router.get("/Search_Designation/", function (req, res, next) {
+    try {
+        lead.Search_Designation(req.query.Designation_Name, function (err, rows) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(rows[0]);
+            }
+        });
+    } catch (e) { } finally { }
+});
+
 
 router.get("/Search_Checklist/", function (req, res, next) {
   try {
