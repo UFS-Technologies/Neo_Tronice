@@ -7,6 +7,10 @@ var lead = {
     console.log("followup_: ", followup_);
   console.log("customFields_: ", customFields_);
     let FollowUp_Value_ = 0;
+     let Enquiry_For_Details_JSON = null;
+    if (lead_.Enquiry_For_Details && Array.isArray(lead_.Enquiry_For_Details) && lead_.Enquiry_For_Details.length > 0) {
+        Enquiry_For_Details_JSON = JSON.stringify(lead_.Enquiry_For_Details);
+    }
 
     if (
       followup_ !== undefined &&
@@ -24,14 +28,17 @@ var lead = {
           datavalue: field.value                   // Map to expected field name
         }));
 
-        let transformedenquiryCustomFields = null;
+       let transformedenquiryCustomFields = null;
       if (enquiryForCustomFields_ && Array.isArray(enquiryForCustomFields_) && enquiryForCustomFields_.length > 0) {
         transformedenquiryCustomFields = enquiryForCustomFields_.map(field => ({
           custom_field_id: field.custom_field_id,  // Map to expected field name
           value: field.value                   // Map to expected field name
         }));
+         
 
       }
+    
+
         console.log("Transformed customFields:", transformedCustomFields);        // Add transformed custom fields to followup data
         followup_.CustomFields = transformedCustomFields;
       }
@@ -59,6 +66,7 @@ var lead = {
     }
 
     console.log("followup_: ", followup_);
+    
 
     const sqlQuery = `
         CALL Save_lead(
@@ -105,8 +113,8 @@ var lead = {
             @Completed_Task_ := ?,
             @FollowUp_ := ?,
             @FollowUp_Value_ := ?,
-            @Enquiry_For_Id_ := ?,
-            @Enquiry_For_Name_ := ?,
+            @Enquiry_For_Details_ := ?,
+             
             @Enquiry_Source_Id_ := ?,
             @Enquiry_Source_Name_ := ?,
             @Login_userId_ := ?,
@@ -133,7 +141,7 @@ var lead = {
         @PE_Name_ :=?,
           @CRE_Id_ :=?,
             @CRE_Name_ :=?,
-             @Vertical_Id_ := ?, @Vertical_Name_ := ?, @Designation_Id_ := ?, @Designation_Name_ := ?,
+             @Vertical_Id_ := ?, @Vertical_Name_ := ?, @Designation_Id_ := ?, @Designation_Name_ := ?,@Company_Name_ :=?, 
             @Custom_Fields_ :=?,
       @enquiryForCustomFields_ := ? 
 
@@ -207,8 +215,9 @@ var lead = {
       lead_.Completed_Task,
       JSON.stringify(followup_),
       FollowUp_Value_,
-      lead_.Enquiry_For_Id,
-      lead_.Enquiry_For_Name,
+      Enquiry_For_Details_JSON,
+      //lead_.Enquiry_For_Id,
+      //lead_.Enquiry_For_Name,
       lead_.Enquiry_Source_Id,
       lead_.Enquiry_Source_Name,
       User_Details_Id,
@@ -243,6 +252,7 @@ lead_.CRE_Name,
     lead_.Vertical_Name,    // ✅ Add Vertical Name
     lead_.Designation_Id,   // ✅ Add Designation Id
     lead_.Designation_Name,
+    lead.Company_Name,
        customFieldsForProcedure,
        enquirycustomFieldsForProcedure
 

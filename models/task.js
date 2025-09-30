@@ -15,8 +15,7 @@ var task = {
         "@Task_Date_ :=?," +
         "@Task_Type_Id_ :=?," +
         "@Task_Type_Name_ :=?," +
-        "@Description_ :=?," +
-        "@Task_Time_ :=?," +
+        
         "@Completion_Date_ :=?," +
         "@Completion_Time_ :=?" +
         ")",
@@ -30,8 +29,7 @@ var task = {
         task_.Task_Date,
         task_.Task_Type_Id,
         task_.Task_Type_Name,
-        task_.Description,
-        task_.Task_Time,
+       
         task_.Completion_Date,
         task_.Completion_Time,
       ],
