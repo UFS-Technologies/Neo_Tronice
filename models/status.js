@@ -15,6 +15,8 @@ var status = {
       "@Stage_Id_ := ?," +
       "@Stage_Name_ := ?," +
       "@Progress_Value_ := ?," +
+      "@Department_Id_ := ?," +      // 👈 added
+      "@Department_Name_ := ?," + 
       "@p_custom_fields_json := ?" + // 👈 added parameter
       ")",
     [
@@ -29,6 +31,8 @@ var status = {
       status_.Stage_Id,
       status_.Stage_Name,
       status_.Progress_Value,
+      status_.Department_Id,           // 👈 new parameter
+      status_.Department_Name,
       JSON.stringify(status_.Custom_Fields || []) // 👈 JSON string or empty array
     ],
     callback
